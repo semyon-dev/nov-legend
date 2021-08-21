@@ -45,6 +45,7 @@ func main() {
 
 	// routes
 	app.GET("/routes", routes.GetRoutes)   // get routes
+	app.GET("/route/:id", routes.GetRoute) // get routes
 	app.POST("/route/visit", routes.Visit) // visit route
 
 	err := app.Run("0.0.0.0:" + config.Port)

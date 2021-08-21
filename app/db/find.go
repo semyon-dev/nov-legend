@@ -98,7 +98,7 @@ func GetUsersByIds(ids []primitive.ObjectID) (users []model.User) {
 	return
 }
 
-func GetAchievementsByIds(ids []primitive.ObjectID) (achievements []model.Achievements) {
+func GetAchievementsByIds(ids []primitive.ObjectID) (achievements []model.Achievement) {
 	filter := bson.M{"_id": bson.M{"$in": ids}}
 	cursor, err := db.Collection("achievements").Find(context.Background(), filter)
 	if err != nil {

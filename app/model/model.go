@@ -15,20 +15,22 @@ type User struct {
 	Exp             int                  `json:"exp" bson:"exp"`
 	Level           int                  `json:"level" bson:"-"`
 	CompletedRoutes []primitive.ObjectID `json:"completedStories" bson:"completedStories"`
-	Achievements    []primitive.ObjectID `json:"achievements" bson:"achievements"`
+	AchievementsIds []primitive.ObjectID `json:"-" bson:"achievements"`
+	Achievements    []Achievement        `json:"achievements" bson:"-"`
 	CreatedAt       time.Time            `json:"-" bson:"createdAt"`
 	Role            string               `json:"role" bson:"role"` // user or moderator
 }
 
 type Route struct {
-	Id   primitive.ObjectID `json:"id" bson:"_id"`
-	Name string             `json:"name" bson:"name"`
-	Step []struct {
+	Id    primitive.ObjectID `json:"id" bson:"_id"`
+	Name  string             `json:"name" bson:"name"`
+	Steps []struct {
 		Name        string             `json:"name" bson:"name"`
 		Description string             `json:"description" bson:"description"`
 		PhotoURL    string             `json:"photoURL" bson:"photoURL"`
 		PointId     primitive.ObjectID `json:"pointId" bson:"pointId"`
-	} `json:"step" bson:"step"`
+		Coordinates Coordinates        `json:"coordinates" bson:"-"`
+	} `json:"steps" bson:"steps"`
 	Duration string    `json:"duration" bson:"duration"`
 	Tags     []string  `json:"tags" bson:"tags"`
 	Exp      int       `json:"exp" bson:"exp"`
@@ -44,7 +46,7 @@ type Comment struct {
 	Likes    uint               `json:"likes" bson:"likes"`
 }
 
-type Achievements struct {
+type Achievement struct {
 	Id          primitive.ObjectID `json:"id" bson:"_id"`
 	Name        string             `json:"name" bson:"name"`
 	Description string             `json:"description" bson:"description"`
@@ -52,7 +54,7 @@ type Achievements struct {
 	Icon        int64              `json:"icon" bson:"icon"`
 }
 
-type Coordinate struct {
+type Coordinates struct {
 	Lat float64 `json:"lat" bson:"lat"`
 	Lng float64 `json:"lng" bson:"lng"`
 }
@@ -65,7 +67,7 @@ type Point struct {
 	Name          string             `json:"name" bson:"name"`
 	Type          string             `json:"type" bson:"type"`
 	Tags          []string           `json:"tags" bson:"tags"`
-	Coordinate    Coordinate         `json:"coordinate" bson:"coordinate"`
+	Coordinates   Coordinates        `json:"coordinates" bson:"coordinates"`
 	Description   string             `json:"description" bson:"description"`
 	DescriptionEN string             `json:"descriptionEN" bson:"descriptionEN"`
 	Website       string             `json:"website" bson:"website"`

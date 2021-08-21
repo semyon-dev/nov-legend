@@ -16,7 +16,7 @@ func Visit(c *gin.Context) {
 
 	jsonInput := struct {
 		PointId  string           `json:"pointId"`
-		Location model.Coordinate `json:"location"`
+		Location model.Coordinates `json:"location"`
 	}{}
 
 	if err := c.ShouldBindJSON(&jsonInput); err != nil {
@@ -37,7 +37,7 @@ func Visit(c *gin.Context) {
 		return
 	}
 
-	km := util.Distance(point.Coordinate.Lat, point.Coordinate.Lng, jsonInput.Location.Lat, jsonInput.Location.Lng)
+	km := util.Distance(point.Coordinates.Lat, point.Coordinates.Lng, jsonInput.Location.Lat, jsonInput.Location.Lng)
 	if km < 10000.00 {
 		db.AddExpToUser(userId, 500)
 		c.JSON(http.StatusOK, gin.H{

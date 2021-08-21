@@ -39,7 +39,7 @@ func GetPointsByText(c *gin.Context) {
 func GetDistance(c *gin.Context) {
 
 	json := struct {
-		CurrentLocation model.Coordinate `json:"currentLocation"`
+		CurrentLocation model.Coordinates `json:"currentLocation"`
 		Points          []string         `json:"points"`
 	}{}
 
@@ -60,7 +60,7 @@ func GetDistance(c *gin.Context) {
 	points := db.GetPointsByIds(pointsP)
 
 	for _, v := range points {
-		reply[v.Id.Hex()] = util.Distance(json.CurrentLocation.Lat, json.CurrentLocation.Lng, v.Coordinate.Lat, v.Coordinate.Lng)
+		reply[v.Id.Hex()] = util.Distance(json.CurrentLocation.Lat, json.CurrentLocation.Lng, v.Coordinates.Lat, v.Coordinates.Lng)
 	}
 
 	c.JSON(http.StatusOK, gin.H{

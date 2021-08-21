@@ -11,7 +11,7 @@ import (
 func Visit(c *gin.Context) {
 	jsonInput := struct {
 		RouteId  string           `json:"routeId"`
-		Location model.Coordinate `json:"location"`
+		Location model.Coordinates `json:"location"`
 	}{}
 
 	if err := c.ShouldBindJSON(&jsonInput); err != nil {
