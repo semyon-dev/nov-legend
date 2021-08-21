@@ -10,7 +10,7 @@ import (
 	"nov-legend/app/model"
 )
 
-func GetPointByID(id interface{}) (point model.Point, isExist bool) {
+func GetPointByID(id primitive.ObjectID) (point model.Point, isExist bool) {
 	filter := bson.M{"_id": id}
 	err := db.Collection("points").FindOne(context.Background(), filter).Decode(&point)
 	if err != nil {
@@ -21,6 +21,14 @@ func GetPointByID(id interface{}) (point model.Point, isExist bool) {
 		return
 	}
 	return point, true
+}
+
+func GetPointByIDString(id string) (point model.Point, isExist bool) {
+	objId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return
+	}
+	return GetPointByID(objId)
 }
 
 func FindPointsByText(text string) (points []model.Point) {
@@ -39,9 +47,9 @@ func FindPointsByText(text string) (points []model.Point) {
 	return
 }
 
-func GetRouteByID(id interface{}) (point model.Route, isExist bool) {
+func GetRouteByID(id primitive.ObjectID) (route model.Route, isExist bool) {
 	filter := bson.M{"_id": id}
-	err := db.Collection("routes").FindOne(context.Background(), filter).Decode(&point)
+	err := db.Collection("routes").FindOne(context.Background(), filter).Decode(&route)
 	if err != nil {
 		fmt.Println(err)
 		if err == mongo.ErrNoDocuments {
@@ -49,7 +57,7 @@ func GetRouteByID(id interface{}) (point model.Route, isExist bool) {
 		}
 		return
 	}
-	return point, true
+	return route, true
 }
 
 func GetPoints() (points []model.Point) {
@@ -141,4 +149,12 @@ func GetUserByIdString(id string) (user model.User, isExist bool) {
 		return
 	}
 	return GetUserById(objId)
+}
+
+func GetRouteByIDString(id string) (route model.Route, isExist bool) {
+	objId, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return
+	}
+	return GetRouteByID(objId)
 }

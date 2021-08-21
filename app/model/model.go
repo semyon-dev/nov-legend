@@ -22,14 +22,15 @@ type User struct {
 }
 
 type Route struct {
-	Id    primitive.ObjectID `json:"id" bson:"_id"`
-	Name  string             `json:"name" bson:"name"`
-	Steps []struct {
+	Id          primitive.ObjectID `json:"id" bson:"_id"`
+	Name        string             `json:"name" bson:"name"`
+	Description string             `json:"description" bson:"description"`
+	Steps       []struct {
 		Name        string             `json:"name" bson:"name"`
 		Description string             `json:"description" bson:"description"`
 		PhotoURL    string             `json:"photoURL" bson:"photoURL"`
 		PointId     primitive.ObjectID `json:"pointId" bson:"pointId"`
-		Coordinates Coordinates        `json:"coordinates" bson:"-"`
+		Point       Point              `json:"point" bson:"-"`
 	} `json:"steps" bson:"steps"`
 	Duration string    `json:"duration" bson:"duration"`
 	Tags     []string  `json:"tags" bson:"tags"`

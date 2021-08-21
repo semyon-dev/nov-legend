@@ -10,7 +10,7 @@ import (
 
 func Visit(c *gin.Context) {
 	jsonInput := struct {
-		RouteId  string           `json:"routeId"`
+		RouteId  string            `json:"routeId"`
 		Location model.Coordinates `json:"location"`
 	}{}
 
@@ -22,7 +22,7 @@ func Visit(c *gin.Context) {
 		return
 	}
 
-	_, isExist := db.GetRouteByID(jsonInput.RouteId)
+	_, isExist := db.GetRouteByIDString(jsonInput.RouteId)
 	if !isExist {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"message": "route not found",

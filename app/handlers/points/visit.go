@@ -27,7 +27,7 @@ func Visit(c *gin.Context) {
 		return
 	}
 
-	point, isExist := db.GetPointByID(jsonInput.PointId)
+	point, isExist := db.GetPointByIDString(jsonInput.PointId)
 	if !isExist {
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
 			"message": "point not found",

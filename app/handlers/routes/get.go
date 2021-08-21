@@ -1,6 +1,7 @@
 package routes
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"nov-legend/app/db"
@@ -16,10 +17,21 @@ func GetRoutes(c *gin.Context) {
 
 func GetRoute(c *gin.Context) {
 	id := c.Param("id")
-	route, _ := db.GetRouteByID(id)
+	route, isExist := db.GetRouteByIDString(id)
+	if !isExist {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"message": "route not found",
+			"route":   route,
+		})
+		return
+	}
 	for i, v := range route.Steps {
-		point, _ := db.GetPointByID(v.PointId)
-		route.Steps[i].Coordinates = point.Coordinates
+		fmt.Println(v.PointId)
+		point, isExist := db.GetPointByID(v.PointId)
+		if !isExist {
+			continue
+		}
+		route.Steps[i].Point = point
 	}
 	c.JSON(http.StatusOK, gin.H{
 		"message": "ok",
