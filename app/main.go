@@ -36,12 +36,12 @@ func main() {
 	app.GET("/user/:id", user.GetUserById)
 
 	// points
-	app.GET("/points", points.GetPoints)             // get points
-	app.GET("/point/:id", points.GetPoint)           // get point by ID
-	app.GET("/point/:name", points.GetPointsByText)  // get point by TEXT
-	app.POST("/point", points.CreatePoint)           // create
-	app.POST("/point/visit", points.Visit)           // visit point
-	app.POST("/points/distance", points.GetDistance) // get distance of point(s)
+	app.GET("/points", points.GetPoints)                 // get points
+	app.GET("/point/id/:id", points.GetPoint)            // get point by ID
+	app.GET("/point/name/:name", points.GetPointsByText) // get point by TEXT
+	app.POST("/point", points.CreatePoint)               // create
+	app.POST("/point/visit", points.Visit)               // visit point
+	app.POST("/points/distance", points.GetDistance)     // get distance of point(s)
 
 	// routes
 	app.GET("/routes", routes.GetRoutes)   // get routes
