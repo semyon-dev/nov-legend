@@ -32,7 +32,7 @@ type Route struct {
 		PointId     primitive.ObjectID `json:"pointId" bson:"pointId"`
 		Point       Point              `json:"point" bson:"-"`
 	} `json:"steps" bson:"steps"`
-	Duration string    `json:"duration" bson:"duration"`
+	Duration int       `json:"duration" bson:"duration"`
 	Tags     []string  `json:"tags" bson:"tags"`
 	Exp      int       `json:"exp" bson:"exp"`
 	Comments []Comment `json:"comments" bson:"comments"`
