@@ -1,7 +1,6 @@
 package routes
 
 import (
-	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"nov-legend/app/db"
@@ -26,7 +25,6 @@ func GetRoute(c *gin.Context) {
 		return
 	}
 	for i, v := range route.Steps {
-		fmt.Println(v.PointId)
 		point, isExist := db.GetPointByID(v.PointId)
 		if !isExist {
 			continue

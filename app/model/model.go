@@ -25,6 +25,7 @@ type Route struct {
 	Id          primitive.ObjectID `json:"id" bson:"_id"`
 	Name        string             `json:"name" bson:"name"`
 	Description string             `json:"description" bson:"description"`
+	PhotoURL    string             `json:"photoURL" bson:"photoURL"`
 	Steps       []struct {
 		Name        string             `json:"name" bson:"name"`
 		Description string             `json:"description" bson:"description"`
