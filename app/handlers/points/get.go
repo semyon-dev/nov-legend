@@ -27,6 +27,15 @@ func GetPoint(c *gin.Context) {
 	})
 }
 
+func GetPointsByText(c *gin.Context) {
+	name := c.Param("name")
+	points := db.FindPointsByText(name)
+	c.JSON(http.StatusOK, gin.H{
+		"message": "ok",
+		"points":   points,
+	})
+}
+
 func GetDistance(c *gin.Context) {
 
 	json := struct {

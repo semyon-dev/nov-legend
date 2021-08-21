@@ -6,8 +6,10 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"nov-legend/app/model"
+	"time"
 )
 
 func GetPointByID(id interface{}) (point model.Point, isExist bool) {
@@ -21,6 +23,22 @@ func GetPointByID(id interface{}) (point model.Point, isExist bool) {
 		return
 	}
 	return point, true
+}
+
+func FindPointsByText(text string) (points []model.Point) {
+	filter := bson.M{"$text": bson.M{"$search": text}}
+	opts := options.Find().SetLimit(50).SetMaxTime(time.Second * 3)
+	cursor, err := db.Collection("points").Find(context.Background(), filter, opts)
+	if err != nil {
+		log.Println(err)
+	}
+	// выделяем память заранее
+	points = make([]model.Point, 0, 50)
+	err = cursor.All(context.Background(), &points)
+	if err != nil {
+		log.Println(err)
+	}
+	return
 }
 
 func GetRouteByID(id interface{}) (point model.Route, isExist bool) {
