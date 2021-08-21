@@ -35,7 +35,7 @@ func Register(c *gin.Context) {
 
 	user.RefreshToken = refreshToken
 
-	user.Achievements = map[string]primitive.DateTime{}
+	user.Achievements = []primitive.ObjectID{}
 
 	err = db.Insert("users", user)
 	if err != nil {

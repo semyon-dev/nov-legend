@@ -31,6 +31,10 @@ func UpdateUser(user model.User) (err error) {
 	return nil
 }
 
+func AddExpToUser(userId string, exp uint) {
+
+}
+
 func UpdateRefreshToken(userId primitive.ObjectID, token string) error {
 	filter := bson.M{"_id": userId}
 	update := bson.M{"$set": bson.M{"refreshToken": token}}

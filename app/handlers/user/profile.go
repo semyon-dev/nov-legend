@@ -52,9 +52,15 @@ func GetUser(c *gin.Context) {
 	}
 	user, ok := db.GetUserByIdString(id)
 	user.Level = user.Exp / 1000
+	var ids []primitive.ObjectID
+	for _, achiveId := range user.Achievements {
+		ids = append(ids, achiveId)
+	}
+	achievements := db.GetAchievementsByIds(ids)
 	if ok {
 		c.JSON(http.StatusOK, gin.H{
-			"user": user,
+			"user":         user,
+			"achievements": achievements,
 		})
 		return
 	}

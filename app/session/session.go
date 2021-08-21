@@ -15,7 +15,6 @@ import (
 func Create(id string) (token string, refreshToken string, err error) {
 	atClaims := jwt.MapClaims{}
 	atClaims["authorized"] = true
-	//atClaims["email"] = email
 	atClaims["id"] = id
 	atClaims["exp"] = time.Now().Add(time.Hour * 24).Unix()
 	at := jwt.NewWithClaims(jwt.SigningMethodHS256, atClaims)
@@ -27,7 +26,6 @@ func Create(id string) (token string, refreshToken string, err error) {
 }
 
 type MyCustomClaims struct {
-	//Email string `json:"email"`
 	Id string `json:"id"`
 	jwt.StandardClaims
 }
@@ -43,9 +41,7 @@ func ParseToken(tokenString string) (id string) {
 	}
 
 	if claims, ok := token.Claims.(*MyCustomClaims); ok && token.Valid {
-		//email = claims.Email
 		id = claims.Id
-		//fmt.Printf("%v %v", claims.Email, claims.StandardClaims.ExpiresAt)
 	} else {
 		fmt.Println(err)
 	}

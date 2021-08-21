@@ -6,18 +6,18 @@ import (
 )
 
 type User struct {
-	Id              primitive.ObjectID            `json:"id" bson:"_id"`
-	RefreshToken    string                        `json:"-" bson:"refreshToken"`
-	Name            string                        `json:"name" bson:"name"`
-	Email           string                        `json:"email" bson:"email"`
-	Phone           string                        `json:"phone" bson:"phone"`
-	PhotoURL        string                        `json:"photoURL" bson:"photoURL"`
-	Exp             int                           `json:"exp" bson:"exp"`
-	Level           int                           `json:"level" bson:"-"`
-	CompletedRoutes []primitive.ObjectID          `json:"completedStories" bson:"completedStories"`
-	Achievements    map[string]primitive.DateTime `json:"achievements" bson:"achievements"`
-	CreatedAt       time.Time                     `json:"-" bson:"createdAt"`
-	Role            string                        `json:"role" bson:"role"` // user or moderator
+	Id              primitive.ObjectID   `json:"id" bson:"_id"`
+	RefreshToken    string               `json:"-" bson:"refreshToken"`
+	Name            string               `json:"name" bson:"name"`
+	Email           string               `json:"email" bson:"email"`
+	Phone           string               `json:"phone" bson:"phone"`
+	PhotoURL        string               `json:"photoURL" bson:"photoURL"`
+	Exp             int                  `json:"exp" bson:"exp"`
+	Level           int                  `json:"level" bson:"-"`
+	CompletedRoutes []primitive.ObjectID `json:"completedStories" bson:"completedStories"`
+	Achievements    []primitive.ObjectID `json:"achievements" bson:"achievements"`
+	CreatedAt       time.Time            `json:"-" bson:"createdAt"`
+	Role            string               `json:"role" bson:"role"` // user or moderator
 }
 
 type Route struct {
@@ -49,7 +49,7 @@ type Achievements struct {
 	Name        string             `json:"name" bson:"name"`
 	Description string             `json:"description" bson:"description"`
 	Exp         int                `json:"exp" bson:"exp"`
-	Icon        string             `json:"icon" bson:"icon"`
+	Icon        int64              `json:"icon" bson:"icon"`
 }
 
 type Coordinate struct {

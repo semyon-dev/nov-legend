@@ -6,10 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
 	"nov-legend/app/model"
-	"time"
 )
 
 func GetPointByID(id interface{}) (point model.Point, isExist bool) {
@@ -27,8 +25,8 @@ func GetPointByID(id interface{}) (point model.Point, isExist bool) {
 
 func FindPointsByText(text string) (points []model.Point) {
 	filter := bson.M{"$text": bson.M{"$search": text}}
-	opts := options.Find().SetLimit(50).SetMaxTime(time.Second * 3)
-	cursor, err := db.Collection("points").Find(context.Background(), filter, opts)
+	//opts := options.Find().SetLimit(50).SetMaxTime(time.Second * 3)
+	cursor, err := db.Collection("points").Find(context.Background(), filter, nil)
 	if err != nil {
 		log.Println(err)
 	}
@@ -95,6 +93,18 @@ func GetUsersByIds(ids []primitive.ObjectID) (users []model.User) {
 		log.Println(err)
 	}
 	if err = cursor.All(context.Background(), &users); err != nil {
+		log.Println(err)
+	}
+	return
+}
+
+func GetAchievementsByIds(ids []primitive.ObjectID) (achievements []model.Achievements) {
+	filter := bson.M{"_id": bson.M{"$in": ids}}
+	cursor, err := db.Collection("achievements").Find(context.Background(), filter)
+	if err != nil {
+		log.Println(err)
+	}
+	if err = cursor.All(context.Background(), &achievements); err != nil {
 		log.Println(err)
 	}
 	return

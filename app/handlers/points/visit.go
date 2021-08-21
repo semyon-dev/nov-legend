@@ -6,10 +6,14 @@ import (
 	"net/http"
 	"nov-legend/app/db"
 	"nov-legend/app/model"
+	"nov-legend/app/session"
 	"nov-legend/app/util"
 )
 
 func Visit(c *gin.Context) {
+
+	userId, _ := session.ParseBearer(c)
+
 	jsonInput := struct {
 		PointId  string           `json:"pointId"`
 		Location model.Coordinate `json:"location"`
@@ -35,6 +39,7 @@ func Visit(c *gin.Context) {
 
 	km := util.Distance(point.Coordinate.Lat, point.Coordinate.Lng, jsonInput.Location.Lat, jsonInput.Location.Lng)
 	if km < 10000.00 {
+		db.AddExpToUser(userId, 500)
 		c.JSON(http.StatusOK, gin.H{
 			"message": "ok",
 			"check":   true,
