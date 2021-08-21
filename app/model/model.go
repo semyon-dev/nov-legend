@@ -33,6 +33,7 @@ type Route struct {
 		Point       Point              `json:"point" bson:"-"`
 	} `json:"steps" bson:"steps"`
 	Duration int       `json:"duration" bson:"duration"`
+	Type     string    `json:"type" bson:"type"` // bike, walk, car
 	Tags     []string  `json:"tags" bson:"tags"`
 	Exp      int       `json:"exp" bson:"exp"`
 	Comments []Comment `json:"comments" bson:"comments"`
