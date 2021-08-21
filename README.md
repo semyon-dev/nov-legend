@@ -5,6 +5,7 @@
 * Go 1.16
 * JWT
 * MongoDB
+* Yandex Translate API
 
 ## Пример .env файла
 
