@@ -78,8 +78,8 @@ func GetUserById(c *gin.Context) {
 		return
 	}
 	user, ok := db.GetUserById(objectId)
-	user.Level = user.Exp / 1000
 	if ok {
+		user.Level = user.Exp / 1000
 		c.JSON(http.StatusOK, gin.H{
 			"user":    user,
 			"message": "ok",

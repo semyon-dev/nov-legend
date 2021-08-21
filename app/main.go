@@ -44,9 +44,11 @@ func main() {
 	app.POST("/points/distance", points.GetDistance)     // get distance of point(s)
 
 	// routes
-	app.GET("/routes", routes.GetRoutes)   // get routes
-	app.GET("/route/:id", routes.GetRoute) // get routes
-	app.POST("/route/visit", routes.Visit) // visit route
+	app.GET("/routes", routes.GetRoutes)            // get routes
+	app.GET("/route/:id", routes.GetRoute)          // get routes
+	app.POST("/route/visit", routes.Visit)          // visit route
+	app.POST("/route", routes.CreateRoute)          // create route
+	app.POST("/routes/choose", routes.SelectRoutes) // select/choose route
 
 	err := app.Run("0.0.0.0:" + config.Port)
 	if err != nil {

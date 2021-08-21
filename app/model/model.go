@@ -23,6 +23,7 @@ type User struct {
 
 type Route struct {
 	Id          primitive.ObjectID `json:"id" bson:"_id"`
+	AuthorId    primitive.ObjectID `json:"authorId" bson:"authorId"`
 	Name        string             `json:"name" bson:"name"`
 	Description string             `json:"description" bson:"description"`
 	PhotoURL    string             `json:"photoURL" bson:"photoURL"`
@@ -33,7 +34,7 @@ type Route struct {
 		PointId     primitive.ObjectID `json:"pointId" bson:"pointId"`
 		Point       Point              `json:"point" bson:"-"`
 	} `json:"steps" bson:"steps"`
-	Duration int       `json:"duration" bson:"duration"`
+	Duration uint      `json:"duration" bson:"duration"`
 	Type     string    `json:"type" bson:"type"` // bike, walk, car
 	Tags     []string  `json:"tags" bson:"tags"`
 	Exp      int       `json:"exp" bson:"exp"`

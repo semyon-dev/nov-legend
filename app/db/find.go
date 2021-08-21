@@ -14,13 +14,28 @@ func GetPointByID(id primitive.ObjectID) (point model.Point, isExist bool) {
 	filter := bson.M{"_id": id}
 	err := db.Collection("points").FindOne(context.Background(), filter).Decode(&point)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		if err == mongo.ErrNoDocuments {
 			return model.Point{}, false
 		}
 		return
 	}
 	return point, true
+}
+
+func GetRoutesByType(typ string) (routes []model.Route) {
+	filter := bson.M{"type": typ}
+	cursor, err := db.Collection("routes").Find(context.Background(), filter)
+	if err != nil {
+		log.Println(err)
+	}
+	// выделяем память заранее
+	routes = make([]model.Route, 0, 50)
+	err = cursor.All(context.Background(), &routes)
+	if err != nil {
+		log.Println(err)
+	}
+	return
 }
 
 func GetPointByIDString(id string) (point model.Point, isExist bool) {
@@ -89,18 +104,6 @@ func GetPointsByIds(ids []primitive.ObjectID) (points []model.Point) {
 		log.Println(err)
 	}
 	if err = cursor.All(context.Background(), &points); err != nil {
-		log.Println(err)
-	}
-	return
-}
-
-func GetUsersByIds(ids []primitive.ObjectID) (users []model.User) {
-	filter := bson.M{"_id": bson.M{"$in": ids}}
-	cursor, err := db.Collection("users").Find(context.Background(), filter)
-	if err != nil {
-		log.Println(err)
-	}
-	if err = cursor.All(context.Background(), &users); err != nil {
 		log.Println(err)
 	}
 	return

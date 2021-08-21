@@ -12,10 +12,16 @@ import (
 
 func Visit(c *gin.Context) {
 
-	userId, _ := session.ParseBearer(c)
+	userId, isValid := session.ParseBearer(c)
+	if !isValid {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"message": "invalid token",
+		})
+		return
+	}
 
 	jsonInput := struct {
-		PointId  string           `json:"pointId"`
+		PointId  string            `json:"pointId"`
 		Location model.Coordinates `json:"location"`
 	}{}
 

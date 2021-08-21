@@ -7,10 +7,18 @@ import (
 	"net/http"
 	"nov-legend/app/db"
 	"nov-legend/app/model"
+	"nov-legend/app/session"
 	"nov-legend/app/util"
 )
 
 func CreatePoint(c *gin.Context) {
+	id, isValid := session.ParseBearer(c)
+	if !isValid {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"message": "invalid token",
+		})
+		return
+	}
 	var point model.Point
 	if err := c.ShouldBindJSON(&point); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{
@@ -22,7 +30,15 @@ func CreatePoint(c *gin.Context) {
 	point.Id = primitive.NewObjectID()
 	point.DescriptionEN = util.Translate("en", point.Description)
 	point.Comments = []model.Comment{}
-	err := db.Insert("points", point)
+
+	point.Id = primitive.NewObjectID()
+	ojb, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		log.Println(err)
+	}
+	point.AuthorId = ojb
+
+	err = db.Insert("points", point)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
 			"message": "error",
@@ -30,7 +46,7 @@ func CreatePoint(c *gin.Context) {
 		log.Println(err)
 		return
 	}
-	c.JSON(http.StatusOK, gin.H{
+	c.JSON(http.StatusCreated, gin.H{
 		"message": "ok",
 	})
 }

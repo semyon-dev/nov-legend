@@ -6,9 +6,19 @@ import (
 	"net/http"
 	"nov-legend/app/db"
 	"nov-legend/app/model"
+	"nov-legend/app/session"
 )
 
 func Visit(c *gin.Context) {
+
+	_, isValid := session.ParseBearer(c)
+	if !isValid {
+		c.AbortWithStatusJSON(http.StatusUnauthorized, gin.H{
+			"message": "invalid token",
+		})
+		return
+	}
+
 	jsonInput := struct {
 		RouteId  string            `json:"routeId"`
 		Location model.Coordinates `json:"location"`

@@ -2,8 +2,10 @@ package routes
 
 import (
 	"github.com/gin-gonic/gin"
+	"log"
 	"net/http"
 	"nov-legend/app/db"
+	"nov-legend/app/model"
 )
 
 func GetRoutes(c *gin.Context) {
@@ -11,6 +13,33 @@ func GetRoutes(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"message": "ok",
 		"routes":  routes,
+	})
+}
+
+func SelectRoutes(c *gin.Context) {
+	input := struct {
+		Type     string `json:"type"`
+		Company  string `json:"company"`
+		FoodNeed bool   `json:"foodNeed"`
+		Duration uint   `json:"duration"`
+	}{}
+	err := c.ShouldBindJSON(&input)
+	if err != nil {
+		log.Println(err)
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"message": "invalid params",
+		})
+	}
+	routes := db.GetRoutesByType(input.Type)
+	var routesReply []model.Route
+	for _, v := range routes {
+		if v.Duration == input.Duration {
+			routesReply = append(routesReply, v)
+		}
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"message": "ok",
+		"routes":  routesReply,
 	})
 }
 
