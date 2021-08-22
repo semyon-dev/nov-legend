@@ -47,10 +47,10 @@ IAM_TOKEN=
 
 Поэтому можно ручками создать данные коллекции в бд "main" и сервис успешно заработает:
 
-achievements
-comments
-points
-routes
+achievements \
+comments \
+points \
+routes \
 users
 
 ## РАЗРАБОТЧИК
