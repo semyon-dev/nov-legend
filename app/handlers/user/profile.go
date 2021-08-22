@@ -51,20 +51,23 @@ func GetUser(c *gin.Context) {
 		return
 	}
 	user, ok := db.GetUserByIdString(id)
-	user.Level = user.Exp / 1000
-	var ids []primitive.ObjectID
-	for _, achiveId := range user.AchievementsIds {
-		ids = append(ids, achiveId)
-	}
-	user.Achievements = db.GetAchievementsByIds(ids)
-	if ok {
-		c.JSON(http.StatusOK, gin.H{
-			"user": user,
+	if !ok {
+		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
+			"message": "user not found",
 		})
 		return
 	}
-	c.AbortWithStatusJSON(http.StatusNotFound, gin.H{
-		"message": "not found",
+
+	user.Level = user.Exp / 1000
+
+	if len(user.AchievementsIds) != 0 {
+		user.Achievements = db.GetAchievementsByIds(user.AchievementsIds)
+	} else {
+		user.Achievements = []model.Achievement{}
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"user": user,
 	})
 }
 

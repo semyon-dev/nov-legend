@@ -34,7 +34,11 @@ func Register(c *gin.Context) {
 	}
 
 	user.RefreshToken = refreshToken
+	if user.Role == "" {
+		user.Role = "user"
+	}
 
+	user.CompletedRoutes = []primitive.ObjectID{}
 	user.AchievementsIds = []primitive.ObjectID{}
 
 	err = db.Insert("users", user)
