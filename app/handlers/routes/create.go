@@ -46,5 +46,6 @@ func CreateRoute(c *gin.Context) {
 	}
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "ok",
+		"routeId": route.Id.Hex(),
 	})
 }

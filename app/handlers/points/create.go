@@ -48,5 +48,6 @@ func CreatePoint(c *gin.Context) {
 	}
 	c.JSON(http.StatusCreated, gin.H{
 		"message": "ok",
+		"pointId": point.Id.Hex(),
 	})
 }
