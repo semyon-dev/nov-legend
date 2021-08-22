@@ -53,6 +53,8 @@ points \
 routes \
 users
 
+У коллекции `points` должен быть текстовый индекс для поля name
+
 ## РАЗРАБОТЧИК
 
 Новиков Семен Сергеевич [t.me/semyon_dev](t.me/semyon_dev)
