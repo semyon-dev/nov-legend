@@ -28,8 +28,7 @@ func main() {
 
 	// users
 	app.POST("/auth", user.Auth)
-	app.POST("/user/refresh", user.Refresh) // TODO
-	//app.GET("/user/token", user) // TODO
+	app.POST("/user/refresh", user.Refresh)
 	app.POST("/user", user.Register)
 	app.PUT("/user", user.Update)
 	app.GET("/user", user.GetUser)
@@ -42,6 +41,7 @@ func main() {
 	app.POST("/point", points.CreatePoint)               // create
 	app.POST("/point/visit", points.Visit)               // visit point
 	app.POST("/points/distance", points.GetDistance)     // get distance of point(s)
+	// TODO likes, comments
 
 	// routes
 	app.GET("/routes", routes.GetRoutes)            // get routes
@@ -49,6 +49,7 @@ func main() {
 	app.POST("/route/visit", routes.Visit)          // visit route
 	app.POST("/route", routes.CreateRoute)          // create route
 	app.POST("/routes/choose", routes.SelectRoutes) // select/choose route
+	// TODO likes, comments
 
 	err := app.Run("0.0.0.0:" + config.Port)
 	if err != nil {
