@@ -19,7 +19,7 @@ func CreateRoute(c *gin.Context) {
 		return
 	}
 	var route model.Route
-	err := c.ShouldBindJSON(route)
+	err := c.ShouldBindJSON(&route)
 	if err != nil {
 		log.Println(err)
 		c.AbortWithStatusJSON(http.StatusBadRequest, gin.H{
