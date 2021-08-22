@@ -43,4 +43,4 @@ IAM_TOKEN=
 
 ## РАЗРАБОТЧИК
 
-Новиков Семен Сергеевич t.me/semyon_dev
+Новиков Семен Сергеевич [t.me/semyon_dev](t.me/semyon_dev)
